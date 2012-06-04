@@ -266,29 +266,44 @@ class RectButton extends Button
    buffer[0] = 'S';
    buffer[1] = '1';
    
+   /**
+    * Packet structure
+    *
+    * buffer[0] - Unrelated
+    * buffer[1] - Unrelated
+    * buffer[2] - int state = stateBuffer[2];
+    * buffer[3] - Light lev variable (Unused)
+    * buffer[4] - int roomID = stateBuffer[4];
+    * buffer[5] - Unrelated
+    * buffer[6] - Unrelated
+    */
+   
    //Work out which option it was
    if(x == 0)
    {
+     //Room ID
+     buffer[4] = 0;
+     
+     
      if(y == 0)
      {
-       
+       buffer[2] = CLOSE0;
      }
      else if(y == 1)
      {
-       
+       buffer[2] = OPEN0;
      }
      else if(y == 2)
      {
-       
+       buffer[2] = FILM0;
      }
      else if(y == 3)
      {
-       
-       
+       buffer[2] = DAY0;
      }
      else if(y == 4)
      {
-       
+       buffer[2] = NIGHT0;
      }
      else
      {
@@ -297,26 +312,28 @@ class RectButton extends Button
    }
    else if(x == 1)
    {
+     //Room ID
+     buffer[4] = 1;
+     
      if(y == 0)
      {
-       
+       buffer[2] = CLOSE1;
      }
      else if(y == 1)
      {
-       
+       buffer[2] = OPEN1;
      }
      else if(y == 2)
      {
-       
+       buffer[2] = FILM1;
      }
      else if(y == 3)
      {
-       
-       
+       buffer[2] = DAY1;
      }
      else if(y == 4)
      {
-       
+       buffer[2] = NIGHT1;
      }
      else
      {
@@ -326,26 +343,28 @@ class RectButton extends Button
    }
    else if(x == 2)
    {
+     //Room ID
+     buffer[4] = 2;
+     
      if(y == 0)
      {
-       
+       buffer[2] = CLOSE2;
      }
      else if(y == 1)
      {
-       
+       buffer[2] = OPEN2;
      }
      else if(y == 2)
      {
-       
+       buffer[2] = FILM2;
      }
      else if(y == 3)
      {
-       
-       
+       buffer[2] = DAY2;
      }
      else if(y == 4)
      {
-       
+       buffer[2] = NIGHT2;
      }
      else
      {
@@ -354,26 +373,28 @@ class RectButton extends Button
    }
    else if(x == 3)
    {
+     //Room ID
+     buffer[4] = 3;
+     
      if(y == 0)
      {
-       
+       buffer[2] = 99;
      }
      else if(y == 1)
      {
-       
+       buffer[2] = 99;
      }
      else if(y == 2)
      {
-       
+       buffer[2] = 99;
      }
      else if(y == 3)
      {
-       
-       
+       buffer[2] = 99;
      }
      else if(y == 4)
      {
-       
+       buffer[2] = 99;
      }
      else
      {
@@ -393,4 +414,5 @@ class RectButton extends Button
    int port        = LIGHT_PORT;         // the destination port
      
    udpTx.send( message, MULTICAST_IP, port );
+   println(buffer);
  }
