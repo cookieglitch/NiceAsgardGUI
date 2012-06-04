@@ -1,10 +1,13 @@
 /**
- * Buttons. 
+ * The Nice Asgard Project - GUI
  * 
- * Click on one of the shapes to change
- * the background color. This example
- * demonstates a class for buttons.
+ * Uses code from TI Home Automation GUI example.
+ *
+ * @author John Tiernan
+ * @version 4 June 2012
  */
+// import UDP library
+import hypermedia.net.*;
 
 color currentcolor;
 
@@ -24,7 +27,7 @@ PFont font;
 * UDP multicast address and port definitions
 */
 UDP udp, udpTx;  // define the UDP object
-String MyIpAddress;
+String MyIpAddress = ""; //Leave blank if using multicast
 String MULTICAST_IP       = "224.0.0.1";	// the remote IP address (multicast)
 int LIGHT_PORT = 0xC738;
 int THERMOSTAT_PORT_TX = 0xC739;
@@ -263,6 +266,7 @@ class RectButton extends Button
    buffer[0] = 'S';
    buffer[1] = '1';
    
+   //Work out which option it was
    if(x == 0)
    {
      if(y == 0)
@@ -289,14 +293,7 @@ class RectButton extends Button
      else
      {
        println("Button error!");
-     }
-     // Data
-     buffer[2] = byte(Dimmer);
-     buffer[3] = byte(Dimmer>>8);
-     buffer[4] = byte(LightId);
-     
-     
-     
+     }     
    }
    else if(x == 1)
    {
