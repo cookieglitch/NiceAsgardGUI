@@ -17,11 +17,35 @@ RectButton[][] buttons = new RectButton[4][5];
 boolean locked = false;
 
 PFont font;
-// The font must be located in the sketch's 
-// "data" directory to load successfully
-//font = loadFont("Ziggurat-HTF-Black-32.vlw");
-//textFont(font);
 
+/*
+String[] label = new String[20];
+label[0] = "CLOSE0";
+label[1] = "OPEN0";
+label[2] = "FILM0";
+label[3] = "DAY0";
+label[4] = "NIGHT0";
+
+label[5] = "CLOSE1";
+label[6] = "OPEN1";
+label[7] = "FILM1";
+label[8] = "DAY1";
+label[9] = "NIGHT1";
+
+label[10] = "CLOSE2";
+label[11] = "OPEN2";
+label[12] = "FILM2";
+label[13] = "DAY2";
+label[14] = "NIGHT2";
+
+label[15] = "CLOSE3";
+label[16] = "OPEN3";
+label[17] = "FILM3";
+label[18] = "DAY3";
+label[19] = "NIGHT3";
+*/
+
+String label_temp = "OPEN0";
 
 /*
 * UDP multicast address and port definitions
@@ -37,6 +61,14 @@ void setup()
 {
   size(900, 600);
   smooth();
+  
+  colorMode(RGB);
+  
+  // The font must be located in the sketch's 
+  // "data" directory to load successfully
+  font = loadFont("AdobeHebrew-Bold-48.vlw");
+  textFont(font, 24);
+  textAlign(LEFT, TOP);
 
   color baseColor = color(102);
   currentcolor = baseColor;
@@ -58,22 +90,19 @@ void setup()
   
   
   
-  int ypos = 10;
-  int xpos = 90;
+  int ypos = 50;
+  int topOffset = ypos;
+  int xpos = 130;
   for(int i = 0; i < 4; i++)  
   {
     for(int j = 0; j < 5; j++)
     {
       buttons[i][j] = new RectButton(xpos, ypos, 50, buttoncolor, highlight);
-      ypos = ypos + 60;
-      text("Button" + (i*j), 15, 30); 
-      fill(0, 102, 153);
-
+      ypos = ypos + 90;
     }
-    ypos = 10;
+    ypos = topOffset;
     xpos = xpos + 220;
   }
-  
   
   // create a new datagram connection on port THERMOSTAT_PORT
   // and wait for incomming messages  
@@ -96,7 +125,8 @@ void setup()
 
 void draw()
 {
-  background(currentcolor);
+  //background(currentcolor);
+  background(#000000);
   stroke(255);
   update(mouseX, mouseY);
   //rect1.display();
@@ -107,7 +137,9 @@ void draw()
     {
       buttons[i][j].display();
     }
-  } 
+  }
+  
+  drawText();
 }
 
 void update(int x, int y)
@@ -153,6 +185,7 @@ void update(int x, int y)
     } 
     
   }
+  
 }
 
 
@@ -247,6 +280,7 @@ class RectButton extends Button
     stroke(255);
     fill(currentcolor);
     rect(x, y, size, size);
+    
   }
 }
 
@@ -257,6 +291,8 @@ class RectButton extends Button
  * @param y column ID
  * @return none
  */
+ 
+ //TODO Fix bug? Called too many times for one press
  void buttonHandle(int x, int y)
  {
    println("Pressed: " + x + " and " + y);
@@ -415,4 +451,57 @@ class RectButton extends Button
      
    udpTx.send( message, MULTICAST_IP, port );
    println(buffer);
+ }
+ 
+ void drawText()
+ {
+   
+  //Add labels
+  color textC = color(#FFFFFF);
+  fill(textC);
+  //text(label_temp, 700, 400);
+  //println("text!");
+  //text("more text", 10, 10);
+  
+  //Logo/Branding
+  text("The Nice Asgard Project", 600, 500);
+  text("John Tiernan, element14, Texas Instruments", 400, 550);
+  
+  PImage TIlogo;
+  String TI_LINK = "http://www.ti.com"; 
+  TIlogo = loadImage("images/TI_Logo.jpg");
+  image(TIlogo, 10, 500);
+  
+  //Room 0
+  text("Room 0", 40, 10);
+  text("CLOSE - 0", 10, 70);
+  text("OPEN - 0", 10, 160);
+  text("FILM - 0", 10, 250);
+  text("DAY - 0", 10, 340);
+  text("NIGHT - 0", 10, 430);
+  
+  //Room 1
+  text("Room 1", 260, 10);
+  text("CLOSE - 1", 230, 70);
+  text("OPEN - 1", 230, 160);
+  text("FILM - 1", 230, 250);
+  text("DAY - 1", 230, 340);
+  text("NIGHT - 1", 230, 430);
+  
+  //Room 2
+  text("Room 2", 480, 10);
+  text("CLOSE - 2", 450, 70);
+  text("OPEN - 2", 450, 160);
+  text("FILM - 2", 450, 250);
+  text("DAY - 2", 450, 340);
+  text("NIGHT - 2", 450, 430);
+  
+  //Room 3
+  text("Room 3", 700, 10);
+  text("CLOSE - 3", 670, 70);
+  text("OPEN - 3", 670, 160);
+  text("FILM - 3", 670, 250);
+  text("DAY - 3", 670, 340);
+  text("NIGHT - 3", 670, 430);
+  fill(#000000);
  }
